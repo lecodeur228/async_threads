@@ -1,18 +1,13 @@
+import 'package:async_thread_app/models/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  final String image;
-  final String title;
-  final String category;
-  final double price;
+  final Product product;
 
   const ProductCard({
-    Key? key,
-    required this.image,
-    required this.title,
-    required this.category,
-    required this.price,
-  }) : super(key: key);
+    super.key,
+    required this.product,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +22,11 @@ class ProductCard extends StatelessWidget {
           children: [
             // Image
             ClipRRect(
-              borderRadius: BorderRadius.vertical(
+              borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(10),
               ),
               child: Image.network(
-                image,
+                product.image,
                 height: 120,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -41,8 +36,8 @@ class ProductCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                category,
-                style: TextStyle(
+                product.category,
+                style: const TextStyle(
                   fontSize: 12,
                   color: Colors.grey,
                 ),
@@ -52,8 +47,8 @@ class ProductCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Text(
-                title,
-                style: TextStyle(
+                product.title,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
@@ -65,8 +60,8 @@ class ProductCard extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    '\$${price.toStringAsFixed(2)}',
-                    style: TextStyle(
+                    '\$${product.price.toStringAsFixed(2)}',
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.green,

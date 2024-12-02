@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:async_thread_app/widgets/appbar.dart';
 import 'package:async_thread_app/services/fakestore_service.dart';
-import 'package:async_thread_app/widgets/productcard.dart';
+import 'package:async_thread_app/widgets/product_card.dart';
 import 'package:async_thread_app/models/product.dart';
 
 class Products extends StatefulWidget {
@@ -13,19 +13,19 @@ class Products extends StatefulWidget {
 }
 
 class _ProductsState extends State<Products> {
-  late Future<List<Product>> futureProducts;
+  Future<List<Product>>? futureProducts;
 
   @override
   void initState() {
     super.initState();
     futureProducts =
-        fetchProducts(); // Récupérer les produits lors du démarrage
+        fetchProducts('https://fakestoreapi.com/products/'); // Récupérer les produits lors du démarrage
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: 'Async-Threads'),
+      appBar: const MyAppBar(title: 'Async-Threads'),
       body: FutureBuilder<List<Product>>(
         future: futureProducts,
         builder: (context, snapshot) {
@@ -34,11 +34,11 @@ class _ProductsState extends State<Products> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Erreur: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('Aucun produit disponible'));
+            return const Center(child: Text('Aucun produit disponible'));
           } else {
             return GridView.builder(
               padding: const EdgeInsets.all(8.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, // Nombre de colonnes
                 crossAxisSpacing: 8.0, // Espacement entre les colonnes
                 mainAxisSpacing: 8.0, // Espacement entre les lignes
@@ -47,10 +47,7 @@ class _ProductsState extends State<Products> {
               itemBuilder: (context, index) {
                 final product = snapshot.data![index];
                 return ProductCard(
-                  image: product.image,
-                  title: product.title,
-                  category: product.category,
-                  price: product.price,
+                  product: product,
                 );
               },
             );
@@ -67,7 +64,7 @@ class _ProductsState extends State<Products> {
       highlightColor: Colors.grey.shade100,
       child: GridView.builder(
         padding: const EdgeInsets.all(8.0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 8.0,
           mainAxisSpacing: 8.0,
@@ -96,21 +93,21 @@ class _ProductsState extends State<Products> {
             height: 120,
             color: Colors.white,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           //titre
           Container(
             width: double.infinity,
             height: 14,
             color: Colors.white,
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           //catégorie
           Container(
             width: 100,
             height: 12,
             color: Colors.white,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           //le prix
           Container(
             width: 80,
